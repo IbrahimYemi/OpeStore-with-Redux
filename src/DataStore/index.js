@@ -8,10 +8,19 @@ const stateStore = {
 const reducer = (state = stateStore, action) => {
   switch (action.type) {
     case "SET_CART":
-      return {
-        ...state,
-        cart: [...state.cart, { ...action.payload }],
-      };
+      const exist = state.cart.find((x) => x.id === action.payload.id);
+      if (exist) {
+        alert("Product Already Selected");
+        return {
+          ...state,
+        };
+      } else {
+        alert("Product Added To Cart");
+        return {
+          ...state,
+          cart: [...state.cart, { ...action.payload }],
+        };
+      }
     case "REM_CART":
       return {
         ...state,
