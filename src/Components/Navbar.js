@@ -1,29 +1,32 @@
-import React, { useState } from 'react';
-import { GoThreeBars } from 'react-icons/go';
-import { TbScan } from 'react-icons/tb';
-import { BsCart3 } from 'react-icons/bs';
-import '../CSS/Product_body.css';
-import { Link } from 'react-router-dom';
-import '../CSS/Navbar.css';
-import {useSelector, useDispatch} from "react-redux";
+import React, { useState } from "react";
+import { GoThreeBars } from "react-icons/go";
+import { TbScan } from "react-icons/tb";
+import { BsCart3 } from "react-icons/bs";
+import "../CSS/Product_body.css";
+import { Link } from "react-router-dom";
+import "../CSS/Navbar.css";
+import { removeFromCart } from "../DataStore/action";
+import { useSelector, useDispatch } from "react-redux";
 
 export default function Header() {
-const cart = useSelector((state)=>state.cart);
-const dispatch = useDispatch()
+  const cart = useSelector((state) => state.cart);
+  const dispatch = useDispatch();
 
-const remove = (product) => {
-  dispatch({ type: 'REM_CART', payload: product })
-  console.log(product)
-};
+  const remove = (product) => {
+    dispatch({ type: "REM_CART", payload: product });
+    console.log(product);
+  };
   // link styling
   const linkStyle = {
-    textDecoration: 'none',
+    textDecoration: "none",
   };
+  // closing and display of bar
   const [bar, setBar] = useState(false);
   function handleClick() {
     setBar((prevBar) => !prevBar);
   }
 
+  // closing and display of cart
   const [card, setCard] = useState(false);
   function handleCard() {
     setCard((prevBar) => !prevBar);
@@ -43,7 +46,10 @@ const remove = (product) => {
         <h3>{product.name}</h3>
         <div className="cart_Card">
           <img src={product.image} alt={product.name} />
-          <button className="remove" onClick={() => remove(product)}>
+          <button
+            className="remove"
+            onClick={() => dispatch(removeFromCart(product))}
+          >
             X
           </button>
         </div>
@@ -57,7 +63,7 @@ const remove = (product) => {
         <h1>OppEStarr</h1>
       </Link>
       <nav>
-        <ul className={bar ? 'show' : ''}>
+        <ul className={bar ? "show" : ""}>
           <Link to="/" style={linkStyle}>
             <li onClick={offCard}>HOME</li>
           </Link>
@@ -83,7 +89,7 @@ const remove = (product) => {
           </div>
         ) : (
           <div className="cart">
-            <h4 style={{ color: 'red' }}>Zero Inventory</h4>
+            <h4 style={{ color: "red" }}>Zero Inventory</h4>
           </div>
         ))}
     </div>

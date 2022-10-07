@@ -1,24 +1,19 @@
-import React from 'react';
-import {useSelector, useDispatch} from "react-redux";
-import Header from './Header';
-import { IoMdEyeOff } from 'react-icons/io';
-import '../CSS/Product_body.css';
-import { Link } from 'react-router-dom';
+import React from "react";
+import { useSelector, useDispatch } from "react-redux";
+import Header from "./Header";
+import { IoMdEyeOff } from "react-icons/io";
+import "../CSS/Product_body.css";
+import { Link } from "react-router-dom";
+import { setActive } from "../DataStore/action";
 
-export default function Body({ checkS }) {
-const dispatch = useDispatch()
-const Data = useSelector((state)=>state.data);
-
-// setting individual product details information
-const check = (product) => {
-  dispatch({ type: 'SET_ACTIVE', payload: product })
-  console.log(product)
-};
+export default function Body() {
+  const dispatch = useDispatch();
+  const Data = useSelector((state) => state.data);
 
   // link styling
   const linkStyle = {
-    textDecoration: 'none',
-    color: 'rgb(240, 129, 25)',
+    textDecoration: "none",
+    color: "rgb(240, 129, 25)",
   };
   // data laoding
   const CARD = Data.map((product) => {
@@ -35,7 +30,10 @@ const check = (product) => {
         </span>
 
         <Link to="/details" style={linkStyle}>
-          <button className="show_details" onClick={() => check(product)}>
+          <button
+            className="show_details"
+            onClick={() => dispatch(setActive(product))}
+          >
             Check Out <IoMdEyeOff />
           </button>
         </Link>

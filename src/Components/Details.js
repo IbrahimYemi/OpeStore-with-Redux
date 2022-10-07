@@ -1,18 +1,12 @@
-import React from 'react';
-import { BsCart3 } from 'react-icons/bs';
-import {useSelector, useDispatch} from "react-redux";
+import React from "react";
+import { BsCart3 } from "react-icons/bs";
+import { addToCart } from "../DataStore/action";
+import { useSelector, useDispatch } from "react-redux";
 
 export default function Details() {
-
   // call store redux
-const item = useSelector((state)=>state.active);
-const dispatch = useDispatch()
-
-// use store redux
-const addToCart = (product) => {
-  dispatch({ type: 'SET_CART', payload: product })
-  console.log(product)
-};
+  const item = useSelector((state) => state.active);
+  const dispatch = useDispatch();
 
   return (
     <div className="details">
@@ -28,7 +22,7 @@ const addToCart = (product) => {
           <p className="category">Category: {item.category}</p>
           <p>{item.product_desc}</p>
         </div>
-        <button className="addItem" onClick={() => addToCart(item)}>
+        <button className="addItem" onClick={() => dispatch(addToCart(item))}>
           Add To Cart <BsCart3 />
         </button>
       </div>
